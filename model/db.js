@@ -1,2 +1,2 @@
 var mongoose = require('mongoose');
-mongoose.connect( process.env.MONGOLAB_URI || "mongodb://localhost/bracketsdb");
+mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/bracketsdb");
