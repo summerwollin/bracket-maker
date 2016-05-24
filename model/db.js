@@ -15,10 +15,10 @@ var brackets = mongoose.model('brackets', bracketsSchema);
 //load mongoose
 db.on('error', console.error);
 db.once('open', function() {
-  console.log('db open');
 
   //drop users model data before seeding
   mongoose.connection.db.dropCollection('brackets').then(function () {
+    console.log('then~~~~~~~~~~~~~~~~~~~~~~');
     brackets.find({}).exec(function (err, collection) {
       console.log('length: ', collection.length);
       if (collection.length === 0) {
