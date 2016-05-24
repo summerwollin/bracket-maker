@@ -4,10 +4,11 @@ var mongoose = require('mongoose');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  mongoose.model('users').find(function(err, users) {
-    res.send(users);
-  });
-  // res.render('index', { title: 'Express' });
+  // mongoose.model('users').find(function(err, users) {
+  //   res.send(users);
+  // });
+  console.log('router');
+  res.render('index', { title: 'Express' });
 });
 
 module.exports = router;
