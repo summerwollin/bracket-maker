@@ -18,7 +18,7 @@ db.once('open', function() {
 
   //drop users model data before seeding
   mongoose.connection.db.dropCollection('brackets').then(function () {
-    console.log('then~~~~~~~~~~~~~~~~~~~~~~');
+    console.log('then~~~~~~~~~~~~~~~');
     brackets.find({}).exec(function (err, collection) {
       console.log('length: ', collection.length);
       if (collection.length === 0) {
