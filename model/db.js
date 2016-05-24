@@ -1,58 +1,41 @@
 var mongoose = require('mongoose');
 
 var db = mongoose.connection;
+//create schemas
+var bracketsSchema = mongoose.Schema({
+  bracket_name: String,
+  user_name: String,
+  initial_location: String,
+  round1: Boolean,
+  round2: Boolean,
+  round3: Boolean
+})
+var brackets = mongoose.model('brackets', bracketsSchema);
 
 //load mongoose
 db.on('error', console.error);
 db.once('open', function() {
 
-  //create schemas
-  var usersSchema = mongoose.Schema({
-    name: String
-  });
-  var users = mongoose.model('users', usersSchema);
 
-  var bracketsSchema = mongoose.Schema({
-    user: {type: mongoose.Schema.ObjectId, ref: 'users'},
-    round1_opponent: {type: mongoose.Schema.ObjectId, ref: 'users',},
-    round1_result: Boolean,
-    round2_opponent: {type: mongoose.Schema.ObjectId, ref: 'users'},
-    round2_result: Boolean,
-    round3_opponent: {type: mongoose.Schema.ObjectId, ref: 'users'},
-    round3_result: Boolean
-  })
-  var brackets = mongoose.model('brackets', bracketsSchema);
 
   //drop users model data before seeding
-  mongoose.connection.db.dropCollection('users').then(function () {
-    users.find({}).exec(function (err, collection) {
+  mongoose.connection.db.dropCollection('brackets').then(function () {
+    brackets.find({}).exec(function (err, collection) {
       console.log('length: ', collection.length);
       if (collection.length === 0) {
-          users.create({ name: 'Summer' });
-          users.create({ name: 'Alan' });
-          users.create({ name: 'Mike' });
-          users.create({ name: 'Lincoln' });
-          users.create({ name: 'Jeff' });
-          users.create({ name: 'Akyuna' });
-          users.create({ name: 'Dize' });
-          users.create({ name: 'Matt' });
+          brackets.create({ bracket_name: 'seedbracket', user_name: 'Summer', initial_location: 'N1'});
+          brackets.create({ bracket_name: 'seedbracket', user_name: 'Alan', initial_location: 'N2'});
+          brackets.create({ bracket_name: 'seedbracket', user_name: 'Mike', initial_location: 'N3'});
+          brackets.create({ bracket_name: 'seedbracket', user_name: 'Lincoln', initial_location: 'N4'});
+          brackets.create({ bracket_name: 'seedbracket', user_name: 'Jeff', initial_location: 'S1'});
+          brackets.create({ bracket_name: 'seedbracket', user_name: 'Akyuna', initial_location: 'S2'});
+          brackets.create({ bracket_name: 'seedbracket', user_name: 'Dize', initial_location: 'S3'});
+          brackets.create({ bracket_name: 'seedbracket', user_name: 'Matt', initial_location: 'S4'});
       }
-    }).then(function () {
-      users.find({}).exec(function (err, collection) {
-        var usersIds = [];
-        collection.forEach(function (user) {
-          usersIds.push(user._id);
-        })
-        console.log(usersIds);
-      })
+    });
   })
-  })
-//   users.find({}).exec(function (err, collection) {
-//     console.log('length: ', collection.length);
-//       if (collection.length === 8) {
-//
-//       }
-//
+
+
 });
 
 mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost/bracket');

@@ -18,7 +18,6 @@
     "serve-favicon": "~2.3.0"
   },
   "description": "Ionic App Base =====================",
-  "main": "app.js",
   "author": "",
   "license": "ISC",
   "cordovaPlugins": [],
