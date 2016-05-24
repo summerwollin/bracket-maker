@@ -37,9 +37,15 @@ db.once('open', function() {
           users.create({ name: 'Dize' });
           users.create({ name: 'Matt' });
       }
-    });
-  }).then(function (stuff) {
-    console.log('~~~~~: ', stuff);
+    }).then(function () {
+      users.find({}).exec(function (err, collection) {
+        var usersIds = [];
+        collection.forEach(function (user) {
+          usersIds.push(user._id);
+        })
+        console.log(usersIds);
+      })
+  })
   })
 //   users.find({}).exec(function (err, collection) {
 //     console.log('length: ', collection.length);
@@ -47,6 +53,6 @@ db.once('open', function() {
 //
 //       }
 //
-// });
+});
 
 mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost/bracket');
