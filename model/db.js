@@ -24,13 +24,13 @@ db.once('open', function() {
   var brackets = mongoose.model('brackets', bracketsSchema);
 
   //drop users model data before seeding
-  mongoose.connection.db.dropCollection('users', function(err, result) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('dropped users collection');
-    }
-  });
+  // mongoose.connection.db.dropCollection('users', function(err, result) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     console.log('dropped users collection');
+  //   }
+  // });
   //insert seed data to users model
   users.find({}).exec(function (err, collection) {
     console.log('length: ', collection.length);
@@ -47,4 +47,4 @@ db.once('open', function() {
   });
 });
 
-mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost/bracket');
+mongoose.connect( process.env.MONGOLAB_PINK_URI || 'mongodb://localhost/bracket');
