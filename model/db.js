@@ -16,6 +16,7 @@ var brackets = mongoose.model('brackets', bracketsSchema);
 db.on('error', console.error);
 db.once('open', function() {
 
+
   //drop users model data before seeding
   mongoose.connection.db.dropCollection('brackets').then(function () {
     console.log('then~~~~~~~~~~~~~~~');
