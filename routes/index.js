@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
     res.send(brackets);
   });
 });
-router.post('/bracket', function(req, res, next) {
+router.post('/bracket/create', function(req, res, next) {
   console.log('bracket post route');
 
   mongoose.model('brackets')
