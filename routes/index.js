@@ -5,7 +5,7 @@ var bracketsSchema = mongoose.model('brackets');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  mongoose.model('brackets').find({bracket_name: req.body.bracket_name}).then(function(brackets) {
+  mongoose.model('brackets').find().then(function(brackets) {
     res.send(brackets);
   });
 });
@@ -77,6 +77,20 @@ router.post('/bracket/create', function(req, res, next) {
               res.send('success');
           })
         }
+      })
+  })
+
+  router.post('/bracket/result', function (req, res, next) {
+    mongoose.model('brackets')
+      .find({bracket_name: req.body.bracket_name, initial_location: req.body.initial_location})
+      .then(function (user) {
+        if (user.length > 0) {
+          user.round1 = req.body.result;
+          res.send('success');
+        } else {
+          res.send('invalid request');
+        }
+
       })
   })
 
