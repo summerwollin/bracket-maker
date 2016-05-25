@@ -33,7 +33,9 @@ router.post('/bracket/create', function(req, res, next) {
             res.send('success');
         })
       } else {
-        res.send('bracket name already exists');
+        res.status(422).json({
+          error: 'bracket name already taken'
+        })
       }
     })
 
@@ -44,7 +46,9 @@ router.post('/bracket/create', function(req, res, next) {
       .find({bracket_name: req.body.bracket_name})
       .then(function (bracket) {
         if (bracket.length === 0) {
-          res.send('bracket does not exist');
+          res.status(422).json({
+            error: 'bracket does not exist'
+          })
         } else if (bracket.length < 8){
           var location;
           switch (bracket.length) {
@@ -77,7 +81,9 @@ router.post('/bracket/create', function(req, res, next) {
               res.send('success');
           })
         } else {
-          res.send('bracket is full');
+          res.status(422).json({
+            error: 'bracket is full'
+          })
         }
       })
   })
@@ -100,10 +106,14 @@ router.post('/bracket/create', function(req, res, next) {
             user.save();
             res.send('success');
           } else {
-            res.send('invalid request');
+            res.status(422).json({
+              error: 'invalid request'
+            })
           }
         } else {
-          res.send('invalid request');
+          res.status(422).json({
+            error: 'invalid request'
+          })
         }
 
       })
