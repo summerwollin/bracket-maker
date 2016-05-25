@@ -14,10 +14,8 @@ router.get('/bracket/:name', function(req, res, next) {
   mongoose.model('brackets').find({bracket_name: req.params.name}).then(function(brackets) {
     if (brackets.length === 0) {
       res.send('bracket does not exist');
-    } else if (brackets.length < 8){
-      res.send('bracket is set up and ready to be joined');
     } else {
-      res.send('bracket is full');
+      res.send(brackets);
     }
   });
 });
@@ -45,7 +43,7 @@ router.post('/bracket/create', function(req, res, next) {
       .then(function (bracket) {
         if (bracket.length === 0) {
           res.send('bracket does not exist');
-        } else {
+        } else if (bracket.length < 8){
           var location;
           switch (bracket.length) {
             case 1:
@@ -76,17 +74,32 @@ router.post('/bracket/create', function(req, res, next) {
           newBracket.save().then(function () {
               res.send('success');
           })
+        } else {
+          res.send('bracket is full');
         }
       })
   })
 
   router.post('/bracket/result', function (req, res, next) {
     mongoose.model('brackets')
-      .find({bracket_name: req.body.bracket_name, initial_location: req.body.initial_location})
+      .findOne({bracket_name: req.body.bracket_name, initial_location: req.body.initial_location})
       .then(function (user) {
-        if (user.length > 0) {
-          user.round1 = req.body.result;
-          res.send('success');
+        if (user) {
+          if (req.body.round === "round1") {
+            user.round1 = req.body.result;
+            user.save();
+            res.send('success');
+          } else if (req.body.round === "round2") {
+            user.round2 = req.body.result;
+            user.save();
+            res.send('success');
+          } else if (req.body.round === "round3") {
+            user.round3 = req.body.result;
+            user.save();
+            res.send('success');
+          } else {
+            res.send('invalid request');
+          }
         } else {
           res.send('invalid request');
         }
