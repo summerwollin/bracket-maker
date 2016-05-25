@@ -31,7 +31,7 @@ router.post('/bracket/create', function(req, res, next) {
             res.send('success');
         })
       } else {
-        res.send('not success');
+        res.send('bracket name already exists');
       }
     })
 
@@ -105,6 +105,21 @@ router.post('/bracket/create', function(req, res, next) {
         }
 
       })
+  })
+
+  router.post('/bracket/delete/bracket', function (req, res, next) {
+    mongoose.model('brackets')
+    .find({bracket_name: req.body.bracket_name}).remove().exec()
+    .then(function () {
+      res.send('deleted bracket');
+    })
+  })
+  router.post('/bracket/delete/user', function (req, res, next) {
+    mongoose.model('brackets')
+    .findOne({bracket_name: req.body.bracket_name, initial_location: req.body.initial_location}).remove().exec()
+    .then(function () {
+      res.send('deleted user');
+    })
   })
 
 module.exports = router;
