@@ -5,26 +5,34 @@ var bracketsSchema = mongoose.model('brackets');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  mongoose.model('brackets').find().then(function(brackets) {
-    console.log('routeBrackets: ', brackets);
+  mongoose.model('brackets').find({bracket_name: req.body.bracket_name}).then(function(brackets) {
     res.send(brackets);
   });
 });
+
+router.get('/bracket/:name', function(req, res, next) {
+  mongoose.model('brackets').find({bracket_name: req.params.name}).then(function(brackets) {
+    if (brackets.length === 0) {
+      res.send('bracket does not exist');
+    } else if (brackets.length < 8){
+      res.send('bracket is set up and ready to be joined');
+    } else {
+      res.send('bracket is full');
+    }
+  });
+});
+
 router.post('/bracket/create', function(req, res, next) {
-  console.log('bracket post route');
 
   mongoose.model('brackets')
     .find({bracket_name: req.body.bracket_name})
     .then(function (bracket) {
-      console.log('bracket: ', bracket);
       if (bracket.length === 0) {
         var newBracket = new bracketsSchema({bracket_name: req.body.bracket_name, user_name: req.body.user_name, initial_location: 'N1'});
         newBracket.save().then(function () {
             res.send('success');
         })
-        console.log('newBracket:', newBracket);
       } else {
-        console.log('bracket name already taken');
         res.send('not success');
       }
     })
@@ -35,7 +43,6 @@ router.post('/bracket/create', function(req, res, next) {
     mongoose.model('brackets')
       .find({bracket_name: req.body.bracket_name})
       .then(function (bracket) {
-        console.log('bracket: ', bracket);
         if (bracket.length === 0) {
           res.send('bracket does not exist');
         } else {
