@@ -10,6 +10,12 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/player/:id', function (req, res, next) {
+  mongoose.model('brackets').findOne({_id: req.params.id}).then(function(player) {
+    res.send(player);
+  })
+})
+
 router.get('/bracket/:name', function(req, res, next) {
   mongoose.model('brackets').find({bracket_name: req.params.name}).then(function(brackets) {
     if (brackets.length === 0) {
