@@ -39,7 +39,7 @@ router.post('/bracket/create', function(req, res, next) {
             res.send('success');
         })
       } else {
-        res.status(400).json({
+        res.status(403).json({
           error: 'bracket name already taken'
         })
       }
@@ -88,7 +88,7 @@ router.post('/bracket/create', function(req, res, next) {
           })
         } else {
           res.status(400).json({
-            error: 'bracket is full'
+            error: 'bracket is full, you can only view this bracket'
           })
         }
       })
