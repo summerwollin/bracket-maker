@@ -20,7 +20,7 @@ router.get('/bracket/:name', function(req, res, next) {
   mongoose.model('brackets').find({bracket_name: req.params.name}).then(function(brackets) {
     if (brackets.length === 0) {
       res.status(422).json({
-        error: 'bracket does not exist'
+        error: 'Bracket does not exist.'
       })
     } else {
       res.send(brackets);
@@ -40,7 +40,7 @@ router.post('/bracket/create', function(req, res, next) {
         })
       } else {
         res.status(200).json({
-          error: 'bracket name already taken'
+          error: 'Bracket name is already taken.'
         })
       }
     })
@@ -53,7 +53,7 @@ router.post('/bracket/create', function(req, res, next) {
       .then(function (bracket) {
         if (bracket.length === 0) {
           res.status(400).json({
-            error: 'bracket does not exist'
+            error: 'Bracket does not exist.'
           })
         } else if (bracket.length < 8){
           var location;
@@ -88,7 +88,7 @@ router.post('/bracket/create', function(req, res, next) {
           })
         } else {
           res.status(400).json({
-            error: 'bracket is full, you can only view this bracket'
+            error: 'Bracket is full, you can only view this bracket.'
           })
         }
       })
