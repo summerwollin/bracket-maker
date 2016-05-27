@@ -39,7 +39,7 @@ router.post('/bracket/create', function(req, res, next) {
             res.send('success');
         })
       } else {
-        res.status(403).json({
+        res.status(200).json({
           error: 'bracket name already taken'
         })
       }
